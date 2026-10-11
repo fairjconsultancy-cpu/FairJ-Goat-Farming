@@ -8,23 +8,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- PWA Manifest -->
+    <!-- PWA Manifest with FairJ Logo -->
     <link rel="manifest" href="data:application/json;charset=utf-8,{
       %22name%22: %22FairJ Goat Farming%22,
       %22short_name%22: %22FairJ Goats%22,
       %22start_url%22: %22/%22,
       %22display%22: %22standalone%22,
       %22background_color%22: %22%23ffffff%22,
-      %22theme_color%22: %22%2315803d%22
+      %22theme_color%22: %22%2315803d%22,
+      %22icons%22: [{%22src%22: %22https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg%22, %22sizes%22: %22512x512%22, %22type%22: %22image/jpeg%22}]
     }">
     <meta name="theme-color" content="#15803d">
+    <link rel="icon" type="image/jpeg" href="https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg">
 </head>
 <body class="bg-gray-50 font-sans pb-20">
 
-    <!-- Header with FairJ Branding -->
+    <!-- Header with FairJ Logo -->
     <header class="bg-green-800 text-white p-3 shadow-md sticky top-0 z-50 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <span class="text-2xl">🐐</span>
+        <div class="flex items-center gap-3">
+            <img src="https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg" alt="FairJ Logo" class="h-10 w-10 rounded-full object-cover border-2 border-yellow-400 bg-white">
             <div>
                 <h1 class="text-base font-bold tracking-wide leading-tight">FairJ Goat Farming</h1>
                 <p class="text-[10px] text-green-200">فئیر جے گوٹ فارمنگ</p>
@@ -36,12 +38,12 @@
     <!-- Direct One-Click Install Banner -->
     <div id="installBanner" class="hidden bg-gradient-to-r from-green-800 to-green-600 text-white p-4 text-center shadow-lg sticky top-14 z-40 border-b-2 border-yellow-400">
         <div class="max-w-md mx-auto flex flex-col items-center gap-2">
-            <p class="text-sm font-bold">📲 Mobile Screen Par App Lagayein!</p>
+            <p class="text-sm font-bold">📲 Mobile Screen Par FairJ App Lagayein!</p>
             <button id="installBtn" class="bg-yellow-500 text-green-950 px-6 py-2 rounded-full text-sm font-extrabold shadow-md hover:bg-yellow-400 active:scale-95 transition">✨ App Install Karein</button>
         </div>
     </div>
 
-    <!-- Product Category Tabs -->
+    <!-- 4 Product Category Tabs -->
     <div class="flex justify-start sm:justify-center gap-2 my-4 px-4 overflow-x-auto pb-2">
         <button onclick="filterCategory('Pregnant Goat')" id="btnPregnantGoat" class="px-4 py-2 rounded-full font-bold bg-green-800 text-white shadow text-xs whitespace-nowrap">گابھن بکری (Pregnant Goat)</button>
         <button onclick="filterCategory('Buck')" id="btnBuck" class="px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap">بکرا (Buck)</button>
@@ -86,9 +88,9 @@
 
     <!-- Script Logic -->
     <script>
-        // NOTE: Enter your Supabase Project URL and Anon Key here
-        const SUPABASE_URL = "YOUR_SUPABASE_URL_HERE";
-        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
+        // Supabase Project Credentials
+        const SUPABASE_URL = "https://qscgzcyzpagmzjcfadxp.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzY2d6Y3l6cGFnbXpqY2ZhZHhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NDE1OTgsImV4cCI6MjEwNzMxNzU5OH0.KmmmJHENFowq6TMRFAOmOMw2_SkJ01XR7pYttU6rggg";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentCategory = 'Pregnant Goat';
@@ -143,10 +145,11 @@
 
         function filterCategory(cat) {
             currentCategory = cat;
-            ['PregnantGoat', 'Buck', 'NulliparousGoat', 'TeddyGoat'].forEach(c => {
-                const btn = document.getElementById('btn' + c);
+            ['Pregnant Goat', 'Buck', 'Nulliparous Goat', 'Teddy Goat'].forEach(c => {
+                const btnId = 'btn' + c.replace(/\s+/g, '');
+                const btn = document.getElementById(btnId);
                 if(btn) {
-                    if(c === cat.replace(/\s+/g, '')) {
+                    if(c === cat) {
                         btn.className = "px-4 py-2 rounded-full font-bold bg-green-800 text-white shadow text-xs whitespace-nowrap";
                     } else {
                         btn.className = "px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap";
@@ -198,7 +201,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="https://wa.me/923339998286?text=${whatsappMsg}" target="_blank" class="block text-center bg-green-600 text-white py-2 rounded text-xs font-bold shadow hover:bg-green-700">Inquire / Buy via WhatsApp</a>
+                            <a href="https://wa.me/923339998286?text=${whatsappMsg}" target="_blank" class="block text-center bg-green-600 text-white py-2 rounded text-xs font-bold shadow hover:bg-green-700">Inquire via WhatsApp</a>
                             ${deleteBtn}
                         </div>
                     </div>
