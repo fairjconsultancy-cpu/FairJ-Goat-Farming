@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- PWA Manifest with FairJ Logo -->
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/json;charset=utf-8,{
       %22name%22: %22FairJ Goat Farming%22,
       %22short_name%22: %22FairJ Goats%22,
@@ -19,6 +20,7 @@
       %22icons%22: [{%22src%22: %22https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg%22, %22sizes%22: %22512x512%22, %22type%22: %22image/jpeg%22}]
     }">
     <meta name="theme-color" content="#15803d">
+    <link rel="apple-touch-icon" href="https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg">
     <link rel="icon" type="image/jpeg" href="https://qscgzcyzpagmzjcfadxp.supabase.co/storage/v1/object/public/FairJ%20Logo/Gemini_Generated_Image_5nrpjh5nrpjh5nrp.jpg">
 </head>
 <body class="bg-gray-50 font-sans pb-20">
@@ -35,12 +37,17 @@
         <button onclick="toggleAdminModal()" class="bg-yellow-500 text-green-950 px-3 py-1 rounded text-xs font-bold shadow hover:bg-yellow-400">Admin</button>
     </header>
 
-    <!-- Direct One-Click Install Banner -->
+    <!-- One-Click Install Banner (Android & Desktop) -->
     <div id="installBanner" class="hidden bg-gradient-to-r from-green-800 to-green-600 text-white p-4 text-center shadow-lg sticky top-14 z-40 border-b-2 border-yellow-400">
         <div class="max-w-md mx-auto flex flex-col items-center gap-2">
             <p class="text-sm font-bold">📲 Mobile Screen Par FairJ App Lagayein!</p>
             <button id="installBtn" class="bg-yellow-500 text-green-950 px-6 py-2 rounded-full text-sm font-extrabold shadow-md hover:bg-yellow-400 active:scale-95 transition">✨ App Install Karein</button>
         </div>
+    </div>
+
+    <!-- iPhone (iOS) Install Help Notice -->
+    <div class="bg-yellow-100 border-b border-yellow-300 text-yellow-900 px-4 py-2 text-center text-xs">
+        💡 <b>iPhone Users:</b> App install karne ke liye Safari mein neeche <b>Share Button ⎋</b> par click karke <b>"Add to Home Screen ➕"</b> select karein.
     </div>
 
     <!-- 4 Product Category Tabs -->
@@ -88,7 +95,6 @@
 
     <!-- Script Logic -->
     <script>
-        // Supabase Project Credentials
         const SUPABASE_URL = "https://qscgzcyzpagmzjcfadxp.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzY2d6Y3l6cGFnbXpqY2ZhZHhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NDE1OTgsImV4cCI6MjEwNzMxNzU5OH0.KmmmJHENFowq6TMRFAOmOMw2_SkJ01XR7pYttU6rggg";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
