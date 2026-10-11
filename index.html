@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zari's Fashion World - PWA Store</title>
+    <title>FairJ Goat Farming</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- PWA Manifest Link -->
+    <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/json;charset=utf-8,{
-      %22name%22: %22Zari's Fashion World%22,
-      %22short_name%22: %22Zari Store%22,
+      %22name%22: %22FairJ Goat Farming%22,
+      %22short_name%22: %22FairJ Goats%22,
       %22start_url%22: %22/%22,
       %22display%22: %22standalone%22,
       %22background_color%22: %22%23ffffff%22,
-      %22theme_color%22: %22%23db2777%22,
-      %22icons%22: [{%22src%22: %22https://img.icons8.com/color/512/shopping-bag.png%22, %22sizes%22: %22512x512%22, %22type%22: %22image/png%22}]
+      %22theme_color%22: %22%2315803d%22
     }">
-    <meta name="theme-color" content="#db2777">
+    <meta name="theme-color" content="#15803d">
 </head>
 <body class="bg-gray-50 font-sans pb-20">
 
-    <!-- Header -->
-    <header class="bg-pink-600 text-white p-4 shadow-md sticky top-0 z-50 flex justify-between items-center">
-        <h1 class="text-xl font-bold">✨ Zari's Fashion World</h1>
-        <button onclick="toggleAdminModal()" class="bg-white text-pink-600 px-3 py-1 rounded text-sm font-semibold shadow">Admin Login</button>
+    <!-- Header with FairJ Branding -->
+    <header class="bg-green-800 text-white p-3 shadow-md sticky top-0 z-50 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl">🐐</span>
+            <div>
+                <h1 class="text-base font-bold tracking-wide leading-tight">FairJ Goat Farming</h1>
+                <p class="text-[10px] text-green-200">فئیر جے گوٹ فارمنگ</p>
+            </div>
+        </div>
+        <button onclick="toggleAdminModal()" class="bg-yellow-500 text-green-950 px-3 py-1 rounded text-xs font-bold shadow hover:bg-yellow-400">Admin</button>
     </header>
 
-    <!-- PWA Install Banner -->
-    <div id="installBanner" class="hidden bg-pink-100 border-b border-pink-200 p-3 text-center">
-        <p class="text-pink-800 text-sm font-medium mb-2">Apne mobile par app install karein taaki ek click mein khol sakein!</p>
-        <button id="installBtn" class="bg-pink-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow">📱 App Install Karein</button>
+    <!-- Direct One-Click Install Banner -->
+    <div id="installBanner" class="hidden bg-gradient-to-r from-green-800 to-green-600 text-white p-4 text-center shadow-lg sticky top-14 z-40 border-b-2 border-yellow-400">
+        <div class="max-w-md mx-auto flex flex-col items-center gap-2">
+            <p class="text-sm font-bold">📲 Mobile Screen Par App Lagayein!</p>
+            <button id="installBtn" class="bg-yellow-500 text-green-950 px-6 py-2 rounded-full text-sm font-extrabold shadow-md hover:bg-yellow-400 active:scale-95 transition">✨ App Install Karein</button>
+        </div>
     </div>
 
-    <!-- Category Tabs -->
-    <div class="flex justify-center gap-4 my-4 px-4">
-        <button onclick="filterCategory('Abaya')" id="btnAbaya" class="px-6 py-2 rounded-full font-bold bg-pink-600 text-white shadow">Abayas</button>
-        <button onclick="filterCategory('Perfume')" id="btnPerfume" class="px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700">Perfumes</button>
+    <!-- Product Category Tabs -->
+    <div class="flex justify-start sm:justify-center gap-2 my-4 px-4 overflow-x-auto pb-2">
+        <button onclick="filterCategory('Pregnant Goat')" id="btnPregnantGoat" class="px-4 py-2 rounded-full font-bold bg-green-800 text-white shadow text-xs whitespace-nowrap">گابھن بکری (Pregnant Goat)</button>
+        <button onclick="filterCategory('Buck')" id="btnBuck" class="px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap">بکرا (Buck)</button>
+        <button onclick="filterCategory('Nulliparous Goat')" id="btnNulliparousGoat" class="px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap">کنواری بکری (Nulliparous Goat)</button>
+        <button onclick="filterCategory('Teddy Goat')" id="btnTeddyGoat" class="px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap">ٹیڈی بکری (Teddy Goat)</button>
     </div>
 
     <!-- Product Grid -->
@@ -48,25 +57,28 @@
     <!-- Admin Modal -->
     <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50 p-4">
         <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-            <h2 class="text-lg font-bold mb-4 text-pink-600">Admin Panel - Add Product</h2>
+            <h2 class="text-lg font-bold mb-4 text-green-800">Admin Panel - FairJ Goat Farming</h2>
             <div id="adminLoginForm">
-                <input type="email" id="adminEmail" placeholder="Admin Email" class="w-full border p-2 mb-2 rounded">
-                <input type="password" id="adminPassword" placeholder="Password" class="w-full border p-2 mb-4 rounded">
-                <button onclick="loginAdmin()" class="w-full bg-pink-600 text-white py-2 rounded font-bold">Login</button>
+                <input type="email" id="adminEmail" placeholder="Admin Email" class="w-full border p-2 mb-2 rounded text-sm">
+                <input type="password" id="adminPassword" placeholder="Password" class="w-full border p-2 mb-4 rounded text-sm">
+                <button onclick="loginAdmin()" class="w-full bg-green-800 text-white py-2 rounded font-bold text-sm">Login</button>
             </div>
             <div id="adminUploadForm" class="hidden">
-                <p class="text-green-600 font-semibold mb-2">✓ Logged in as Admin</p>
-                <input type="text" id="pTitle" placeholder="Product Name" class="w-full border p-2 mb-2 rounded">
-                <select id="pCategory" class="w-full border p-2 mb-2 rounded">
-                    <option value="Abaya">Abaya</option>
-                    <option value="Perfume">Perfume</option>
+                <p class="text-green-600 font-semibold mb-2 text-sm">✓ Logged in as Admin</p>
+                <input type="text" id="pTitle" placeholder="Tag / Title (e.g. Goat #102 / گابھن بکری)" class="w-full border p-2 mb-2 rounded text-sm">
+                <select id="pCategory" class="w-full border p-2 mb-2 rounded text-sm">
+                    <option value="Pregnant Goat">گابھن بکری (Pregnant Goat)</option>
+                    <option value="Buck">بکرا (Buck)</option>
+                    <option value="Nulliparous Goat">کنواری بکری (Nulliparous Goat)</option>
+                    <option value="Teddy Goat">ٹیڈی بکری (Teddy Goat)</option>
                 </select>
-                <input type="number" id="pPrice" placeholder="Price (Rs)" class="w-full border p-2 mb-2 rounded">
-                <textarea id="pDesc" placeholder="Variations (e.g. Size: Free, Color: Black)" class="w-full border p-2 mb-2 rounded"></textarea>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Upload Images (Multiple):</label>
-                <input type="file" id="pImage" multiple accept="image/*" class="w-full border p-2 mb-4 rounded">
-                <button onclick="uploadProduct()" class="w-full bg-green-600 text-white py-2 rounded font-bold mb-2">Publish Product</button>
-                <button onclick="logoutAdmin()" class="w-full bg-gray-400 text-white py-2 rounded font-bold">Logout</button>
+                <input type="number" id="pPrice" placeholder="Price (Rs)" class="w-full border p-2 mb-2 rounded text-sm">
+                <input type="text" id="pStock" placeholder="Availability Status" value="Available / دستیاب ہے" class="w-full border p-2 mb-2 rounded text-sm">
+                <textarea id="pDesc" placeholder="Weight, Age, Breed Details / وزن، عمر اور نسل کی تفصیل" class="w-full border p-2 mb-2 rounded text-sm"></textarea>
+                <label class="block text-xs font-medium text-gray-700 mb-1">Select Image from Gallery:</label>
+                <input type="file" id="pImage" accept="image/*" class="w-full border p-2 mb-4 rounded text-sm">
+                <button onclick="uploadProduct()" class="w-full bg-yellow-500 text-green-950 py-2 rounded font-bold text-sm mb-2 hover:bg-yellow-400">Publish Listing</button>
+                <button onclick="logoutAdmin()" class="w-full bg-gray-400 text-white py-2 rounded font-bold text-sm">Logout</button>
             </div>
             <button onclick="toggleAdminModal()" class="w-full mt-4 text-gray-500 text-sm">Close</button>
         </div>
@@ -74,13 +86,14 @@
 
     <!-- Script Logic -->
     <script>
-        // Supabase Configuration
-        const SUPABASE_URL = "https://bfstugwiughvzsecngcg.supabase.co";
-        const SUPABASE_ANON_KEY = "sb_publishable_owxtj-rFppjSWID2TxjyPw_254halyB";
+        // NOTE: Enter your Supabase Project URL and Anon Key here
+        const SUPABASE_URL = "YOUR_SUPABASE_URL_HERE";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let currentCategory = 'Abaya';
-        let deferredPrompt;
+        let currentCategory = 'Pregnant Goat';
+        let deferredPrompt = null;
+        let isAdminLoggedIn = false;
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -111,34 +124,41 @@
             if (error) {
                 alert('Login Failed: ' + error.message);
             } else {
+                isAdminLoggedIn = true;
                 alert('Login Successful!');
                 document.getElementById('adminLoginForm').classList.add('hidden');
                 document.getElementById('adminUploadForm').classList.remove('hidden');
+                loadProducts();
             }
         }
 
         async function logoutAdmin() {
             await supabaseClient.auth.signOut();
+            isAdminLoggedIn = false;
             document.getElementById('adminLoginForm').classList.remove('hidden');
             document.getElementById('adminUploadForm').classList.add('hidden');
             alert('Logged out');
+            loadProducts();
         }
 
         function filterCategory(cat) {
             currentCategory = cat;
-            if(cat === 'Abaya') {
-                document.getElementById('btnAbaya').className = "px-6 py-2 rounded-full font-bold bg-pink-600 text-white shadow";
-                document.getElementById('btnPerfume').className = "px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700";
-            } else {
-                document.getElementById('btnPerfume').className = "px-6 py-2 rounded-full font-bold bg-pink-600 text-white shadow";
-                document.getElementById('btnAbaya').className = "px-6 py-2 rounded-full font-bold bg-gray-200 text-gray-700";
-            }
+            ['PregnantGoat', 'Buck', 'NulliparousGoat', 'TeddyGoat'].forEach(c => {
+                const btn = document.getElementById('btn' + c);
+                if(btn) {
+                    if(c === cat.replace(/\s+/g, '')) {
+                        btn.className = "px-4 py-2 rounded-full font-bold bg-green-800 text-white shadow text-xs whitespace-nowrap";
+                    } else {
+                        btn.className = "px-4 py-2 rounded-full font-bold bg-gray-200 text-gray-700 text-xs whitespace-nowrap";
+                    }
+                }
+            });
             loadProducts();
         }
 
         async function loadProducts() {
             const grid = document.getElementById('productGrid');
-            grid.innerHTML = '<p class="col-span-2 text-center text-gray-500 py-10">Loading products...</p>';
+            grid.innerHTML = '<p class="col-span-2 text-center text-gray-500 py-10 text-sm">Loading listings...</p>';
             
             const { data, error } = await supabaseClient
                 .from('products')
@@ -147,32 +167,39 @@
                 .order('id', { ascending: false });
 
             if (error) {
-                grid.innerHTML = '<p class="col-span-2 text-center text-red-500">Error loading products</p>';
+                grid.innerHTML = '<p class="col-span-2 text-center text-red-500 text-sm">Error loading listings</p>';
                 return;
             }
 
             if (data.length === 0) {
-                grid.innerHTML = '<p class="col-span-2 text-center text-gray-500 py-10">No products found in this category.</p>';
+                grid.innerHTML = '<p class="col-span-2 text-center text-gray-500 py-10 text-sm">Is category mein filhal koi goat mojood nahi hai.</p>';
                 return;
             }
 
             grid.innerHTML = '';
             data.forEach(p => {
-                const imgUrl = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/300';
-                const whatsappMsg = encodeURIComponent(`Salam! Mujhe yeh product order karna hai:\nProduct: ${p.title}\nPrice: Rs. ${p.price}\nDetails: ${p.description}`);
+                const imgTag = (p.images && p.images.length > 0 && p.images[0]) 
+                    ? `<img src="${p.images[0]}" alt="${p.title}" class="w-full h-48 object-cover cursor-pointer hover:scale-105 transition" onclick="window.open('${p.images[0]}', '_blank')">`
+                    : `<div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-xs">No Image</div>`;
+
+                const whatsappMsg = encodeURIComponent(`Assalam-o-Alaikum! Mujhe FairJ Goat Farming se yeh goat buy/inquire karni hai:\nItem: ${p.title}\nCategory: ${p.category}\nPrice: Rs. ${p.price}\nStatus: ${p.stock || 'Available'}\nDetails: ${p.description}\nImage: ${p.images[0]}`);
                 
+                let deleteBtn = isAdminLoggedIn ? `<button onclick="deleteProduct(${p.id})" class="mt-2 w-full bg-red-500 text-white py-1 rounded text-xs font-bold hover:bg-red-600">🗑️ Delete Listing</button>` : '';
+
                 grid.innerHTML += `
-                    <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col justify-between">
+                    <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col justify-between p-2 border border-green-100">
                         <div>
-                            <img src="${imgUrl}" alt="${p.title}" class="w-full h-48 object-cover cursor-pointer hover:scale-105 transition" onclick="window.open('${imgUrl}', '_blank')">
-                            <div class="p-3">
+                            ${imgTag}
+                            <div class="p-2">
                                 <h3 class="font-bold text-gray-800 text-sm mb-1">${p.title}</h3>
-                                <p class="text-xs text-gray-500 mb-2">${p.description || ''}</p>
-                                <p class="text-pink-600 font-extrabold text-sm">Rs. ${p.price}</p>
+                                <p class="text-xs text-gray-600 mb-1">${p.description || ''}</p>
+                                <p class="text-xs text-green-700 font-semibold mb-2">📦 ${p.stock || 'Available / دستیاب ہے'}</p>
+                                <p class="text-green-800 font-extrabold text-sm mb-2">Rs. ${p.price}</p>
                             </div>
                         </div>
-                        <div class="p-3 pt-0">
-                            <a href="https://wa.me/923339998286?text=${whatsappMsg}" target="_blank" class="block text-center bg-green-500 text-white py-2 rounded text-xs font-bold shadow hover:bg-green-600">Order via WhatsApp</a>
+                        <div>
+                            <a href="https://wa.me/923339998286?text=${whatsappMsg}" target="_blank" class="block text-center bg-green-600 text-white py-2 rounded text-xs font-bold shadow hover:bg-green-700">Inquire / Buy via WhatsApp</a>
+                            ${deleteBtn}
                         </div>
                     </div>
                 `;
@@ -183,40 +210,54 @@
             const title = document.getElementById('pTitle').value;
             const category = document.getElementById('pCategory').value;
             const price = document.getElementById('pPrice').value;
+            const stock = document.getElementById('pStock').value;
             const description = document.getElementById('pDesc').value;
             const fileInput = document.getElementById('pImage');
 
             if (!title || !price || fileInput.files.length === 0) {
-                alert('Please fill all required fields and select images!');
+                alert('Tafseelat, qeemat aur image select karein!');
                 return;
             }
 
-            alert('Uploading images, please wait...');
-            let imageUrls = [];
+            alert('Image upload ho rahi hai, baraye meharbani intazar karein...');
+            const file = fileInput.files[0];
+            const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9_.-]/g, '');
 
-            for (let file of fileInput.files) {
-                const fileName = Date.now() + '_' + file.name;
-                const { data, error } = await supabaseClient.storage.from('product-images').upload(fileName, file);
-                if (!error) {
-                    const { data: publicURL } = supabaseClient.storage.from('product-images').getPublicUrl(fileName);
-                    imageUrls.push(publicURL.publicUrl);
-                }
+            const { data, error } = await supabaseClient.storage.from('product-images').upload(fileName, file);
+            
+            if (error) {
+                alert('Image Upload Error: ' + error.message);
+                return;
             }
 
+            const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/product-images/${fileName}`;
+
             const { error: dbError } = await supabaseClient.from('products').insert([
-                { title, category, price: parseFloat(price), description, images: imageUrls }
+                { title, category, price: parseFloat(price), stock, description, images: [publicUrl] }
             ]);
 
             if (dbError) {
-                alert('Error saving product: ' + dbError.message);
+                alert('Error saving listing: ' + dbError.message);
             } else {
-                alert('Product uploaded successfully!');
+                alert('Goat Listing uploaded successfully!');
                 document.getElementById('pTitle').value = '';
                 document.getElementById('pPrice').value = '';
                 document.getElementById('pDesc').value = '';
                 document.getElementById('pImage').value = '';
                 toggleAdminModal();
                 loadProducts();
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (confirm('Kya aap waqai is listing ko delete karna chahte hain?')) {
+                const { error } = await supabaseClient.from('products').delete().eq('id', id);
+                if (error) {
+                    alert('Error deleting: ' + error.message);
+                } else {
+                    alert('Listing deleted successfully!');
+                    loadProducts();
+                }
             }
         }
 
