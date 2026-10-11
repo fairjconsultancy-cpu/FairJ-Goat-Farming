@@ -37,7 +37,7 @@
         <button onclick="toggleAdminModal()" class="bg-yellow-500 text-green-950 px-3 py-1 rounded text-xs font-bold shadow hover:bg-yellow-400">Admin</button>
     </header>
 
-    <!-- One-Click Install Banner (Android & Desktop) -->
+    <!-- One-Click Install Banner -->
     <div id="installBanner" class="hidden bg-gradient-to-r from-green-800 to-green-600 text-white p-3 text-center shadow-lg sticky top-14 z-40 border-b-2 border-yellow-400">
         <div class="max-w-md mx-auto flex justify-between items-center px-2">
             <p class="text-xs font-bold">📲 Mobile Screen Par App Lagayein!</p>
@@ -69,8 +69,8 @@
             <h2 class="text-lg font-bold mb-4 text-green-800">Admin Panel - FairJ Goat Farming</h2>
             
             <div id="adminLoginForm">
-                <input type="email" id="adminEmail" placeholder="Admin Email" value="a@gmail.com" class="w-full border p-2 mb-2 rounded text-sm">
-                <input type="password" id="adminPassword" placeholder="Password" class="w-full border p-2 mb-4 rounded text-sm">
+                <p class="text-xs text-gray-600 mb-2">Admin Password dalein (Default: <b>admin123</b>):</p>
+                <input type="password" id="adminPasswordInput" placeholder="Password (admin123)" class="w-full border p-2 mb-4 rounded text-sm">
                 <button onclick="loginAdmin()" class="w-full bg-green-800 text-white py-2 rounded font-bold text-sm">Login</button>
             </div>
 
@@ -126,23 +126,20 @@
             document.getElementById('adminModal').classList.toggle('hidden');
         }
 
-        async function loginAdmin() {
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-            if (error) {
-                alert('Login Failed: ' + error.message);
-            } else {
+        function loginAdmin() {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === 'admin123') {
                 isAdminLoggedIn = true;
                 alert('Login Successful!');
                 document.getElementById('adminLoginForm').classList.add('hidden');
                 document.getElementById('adminUploadForm').classList.remove('hidden');
                 loadProducts();
+            } else {
+                alert('Ghalat Password! Default password "admin123" try karein.');
             }
         }
 
-        async function logoutAdmin() {
-            await supabaseClient.auth.signOut();
+        function logoutAdmin() {
             isAdminLoggedIn = false;
             document.getElementById('adminLoginForm').classList.remove('hidden');
             document.getElementById('adminUploadForm').classList.add('hidden');
@@ -174,11 +171,11 @@
                 .order('id', { ascending: false });
 
             if (error) {
-                grid.innerHTML = '<p class="col-span-2 text-center text-red-500 text-sm">Error loading listings</p>';
+                grid.innerHTML = `<p class="col-span-2 text-center text-red-500 text-xs">Error: ${error.message}</p>`;
                 return;
             }
 
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 grid.innerHTML = '<p class="col-span-2 text-center text-gray-500 py-10 text-sm">Is category mein filhal koi goat mojood nahi hai.</p>';
                 return;
             }
