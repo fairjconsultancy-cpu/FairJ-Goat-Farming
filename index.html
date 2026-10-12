@@ -46,7 +46,18 @@
     <div id="installBanner" class="hidden bg-gradient-to-r from-slate-900 to-slate-700 text-white p-4 text-center shadow-lg sticky top-28 z-40 border-b-2 border-amber-500">
         <div class="max-w-md mx-auto flex flex-col items-center gap-2">
             <p class="text-sm font-bold">📲 Mobile Screen Par FairJ App Lagayein!</p>
-            <button id="installBtn" class="bg-amber-500 text-slate-900 px-6 py-2 rounded-full text-sm font-extrabold shadow-md hover:bg-amber-400 active:scale-95 transition">✨ App Install Karein</button>
+            <button id="installBtn" class="bg-amber-500 text-slate-900 px-6 py-2 rounded-full text-sm font-extrabold shadow-md hover:bg-amber-400 active:scale-95 transition flex items-center gap-2">
+                🐐 ✨ App Install Karein
+            </button>
+        </div>
+    </div>
+
+    <!-- Funny Goat Installation Pop-up Modal -->
+    <div id="funnyGoatModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex justify-center items-center z-[100] p-4">
+        <div class="bg-white rounded-2xl p-5 max-w-xs text-center shadow-2xl border-4 border-amber-500 transform animate-bounce">
+            <img src="https://media.giphy.com/media/cMso9wDwqSy3e/giphy.gif" alt="Funny Goat" class="w-40 h-40 object-cover rounded-xl mx-auto border-2 border-amber-400 shadow mb-3">
+            <h3 class="text-lg font-black text-slate-900 mb-1">Mbaaaaa! 🐐</h3>
+            <p class="text-xs font-bold text-amber-600">FairJ Goat App Screen Par Lag Rahi Hai...</p>
         </div>
     </div>
 
@@ -105,6 +116,9 @@
         let deferredPrompt = null;
         let isAdminLoggedIn = false;
 
+        // Bakri Bleat Sound Audio
+        const goatAudio = new Audio('https://www.soundjay.com/nature/sounds/goat-bleat-1.mp3');
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -112,14 +126,28 @@
         });
 
         document.getElementById('installBtn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    document.getElementById('installBanner').classList.add('hidden');
-                }
-                deferredPrompt = null;
+            // Bakri ki awaz play karein
+            try {
+                goatAudio.play();
+            } catch(err) {
+                console.log('Audio autoplay blocked');
             }
+
+            // Funny Goat Modal show karein
+            const funnyModal = document.getElementById('funnyGoatModal');
+            funnyModal.classList.remove('hidden');
+
+            setTimeout(async () => {
+                funnyModal.classList.add('hidden');
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        document.getElementById('installBanner').classList.add('hidden');
+                    }
+                    deferredPrompt = null;
+                }
+            }, 2500);
         });
 
         function toggleAdminModal() {
